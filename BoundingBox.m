@@ -21,9 +21,13 @@ rectangle('Position',[minc,minr,maxc-minc+1,maxr-minr+1], 'EdgeColor','w');
 area=sum(cim(:));
 % hogfeature = extractHOGFeatures(cim)
 % perimeter=bwperim(cim,Neighborhood); perimeter=sum(perimeter(:))
+stats = regionprops(cim,'all');
 rmv = bwmorph(cim,'remove');
 skeleton=bwmorph(rmv,'skel',Inf); skeleton=sum(skeleton(:));
-Features=[Features;theta,roundness,inmo,area,centroid,skeleton];%,perimeter,hogfeature];
+Features=[Features;theta,roundness,inmo,area,centroid,...
+stats.Area,stats.MajorAxisLength,stats.MinorAxisLength,...
+stats.Orientation,stats.EulerNumber,stats.EquivDiameter,...
+stats.Solidity,stats.Extent];
 end
 end
 end
