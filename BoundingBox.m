@@ -1,6 +1,6 @@
 % L is the connected components obtained from L=bwlabel(im2), where im2 is
 % binarized
-function [Features,cim]=BoundingBox(L,im2,disp_on_off,AR_threshold,R_Size,C_Size,AR,Pixel_No, Neighborhood)
+function [Features,cim, labelte]=BoundingBox(L,im2,disp_on_off,AR_threshold,R_Size,C_Size,AR,Pixel_No, Neighborhood)
 Features=[];
 Nc=max(max(L));
 % figure
@@ -24,13 +24,14 @@ cim=imresize(cim,[28,28]);
 % perimeter=bwperim(cim,Neighborhood); perimeter=sum(perimeter(:));
 rproject=sum(double(cim),1);
 cproject=sum(double(cim),2);
+transform=fft(double(cim(:)));
 stats = regionprops(cim,'all');
 rmv = bwmorph(cim,'remove');
 skeleton=bwmorph(rmv,'skel',Inf); skeleton=sum(skeleton(:));
 Features=[Features;theta,roundness,inmo,area,centroid,...
 stats.Area,stats.MajorAxisLength,stats.MinorAxisLength,...
 stats.Orientation,stats.EulerNumber,stats.EquivDiameter,...
-stats.Solidity,stats.Extent,rproject,cproject'];
+stats.Solidity,stats.Extent,rproject,cproject'];%,transform'];
 end
 end
 end
