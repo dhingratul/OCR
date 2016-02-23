@@ -1,14 +1,14 @@
-% function[perte,pertr,perte_knn,labelte]=OCR_Extract_Features(im,locations,classes)
+function[perte,pertr]=OCR_Extract_Features(im,locations,classes)
 load data3; load labels;
 fea=[];count=0;
 thr=200;i=0;
-% if nargin<1
+if nargin<1
 %% Testing
 load locations;
 addpath(genpath('/home/dhingratul/Dropbox/Academics/Spring2016/CS-534/HW/HW1'))
 im=imread('test2.bmp');
 labelte=label2;
-% end
+end
 % srcFiles = dir('/home/dhingratul/Dropbox/Academics/Spring2016/CS-534/HW/HW1/Code/H1-16images/*.bmp');
 %     for i=1:length(srcFiles)
 %         filename = strcat('/home/dhingratul/Dropbox/Academics/Spring2016/CS-534/HW/HW1/Code/H1-16images/',srcFiles(i).name);
@@ -25,7 +25,7 @@ labelte=label2;
         im2=imerode(im2d,se);
         
         L=bwlabel(im2);
-        [temp,cim]=BoundingBox(L,im2,0,50,5,5,10,85,8);%,locations,classes);
+        [temp,cim,labelte]=BoundingBox(L,im2,0,50,5,5,10,85,8,locations,classes);
         if(i==1)
             fea=temp;
 %             labeltr(1:size(temp,1),:)=label;
@@ -40,6 +40,7 @@ labelte=label2;
         end
 %     end
 %% Normalization of features
+load data3 mu sigma
 for k=1:size(fea,2)
 %     mu(1,k)=mean(fea(:,k));
 %     sigma(1,k)=var(fea(:,k));
@@ -80,4 +81,4 @@ count=count+1;
 end
 end
 pertr=count/size(D_index,2)*100
-% end
+end
