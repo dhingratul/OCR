@@ -2,6 +2,7 @@
 % Function to extract OCR Features
 % Input: Image, locations, classes
 % Output: Testing, training accuracy
+% Note: Call from RunMyOCRRecognition.m
 
 function[perte,pertr,label_conf]=OCR_Extract_Features(im,locations,classes)
 load data4;
