@@ -31,7 +31,7 @@ for i=1:Nc;
             labelte=[labelte;temp];
             %% Features
             [centroid, theta, roundness, inmo] = moments(cim, disp_on_off);
-            area=sum(cim(:));
+            area=sum(cim(:)); 
             cim=imresize(cim,[28,28]);
             H=hough(cim);
             peaks=houghpeaks(H);
