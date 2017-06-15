@@ -5,7 +5,7 @@ Nc=max(max(L));
 imagesc(L)
 hold on;
 im2=padarray(im2, [1 1], 0, 'both');
-for i=1:Nc;
+for i=1:Nc
     [r,c]=find(L==i);
     [maxr]=max(r);
     [minr]=min(r);
