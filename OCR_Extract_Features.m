@@ -1,14 +1,13 @@
-function[perte,pertr]=OCR_Extract_Features(im,locations,classes)
-load data3; load labels;
+%% OCR_Extract_Features
+% Function to extract OCR Features
+% Input: Image, locations, classes
+% Output: Testing, training accuracy
+
+function[perte,pertr,label_conf]=OCR_Extract_Features(im,locations,classes)
+load data4;
 fea=[];count=0;
 thr=200;i=0;
-if nargin<1
-%% Testing
-load locations;
-addpath(genpath('/home/dhingratul/Dropbox/Academics/Spring2016/CS-534/HW/HW1'))
-im=imread('test2.bmp');
-labelte=label2;
-end
+
 % srcFiles = dir('/home/dhingratul/Dropbox/Academics/Spring2016/CS-534/HW/HW1/Code/H1-16images/*.bmp');
 %     for i=1:length(srcFiles)
 %         filename = strcat('/home/dhingratul/Dropbox/Academics/Spring2016/CS-534/HW/HW1/Code/H1-16images/',srcFiles(i).name);
@@ -25,7 +24,7 @@ end
         im2=imerode(im2d,se);
         
         L=bwlabel(im2);
-        [temp,cim,labelte]=BoundingBox(L,im2,0,50,5,5,10,85,8,locations,classes);
+        [temp,cim,labelte,L,im2]=BoundingBox(L,im2,0,50,5,5,10,85,8,locations,classes);
         if(i==1)
             fea=temp;
 %             labeltr(1:size(temp,1),:)=label;
@@ -40,30 +39,14 @@ end
         end
 %     end
 %% Normalization of features
-load data3 mu sigma
+load data4 mu sigma
 for k=1:size(fea,2)
 %     mu(1,k)=mean(fea(:,k));
 %     sigma(1,k)=var(fea(:,k));
     fea(:,k)=(fea(:,k)-mu(1,k))/sigma(1,k);
 end
 % fea=normc(fea);
-%% Confusion Matrix Calculation-Recognition
-d=dist2(train,fea);
-[D_sorted, D_index]=sort(d,1);
-label_new=D_index(1,:)';
 
-for i=1:size(D_index,2)
-    label_conf(i,1)=labeltr(label_new(i));
-end
-
-%% Percentage accuracy - Recognition
-for i=1:length(labelte)
-if(label_conf(i)==labelte(i))
-count=count+1;
-end
-end
-perte=count/size(D_index,2)*100
-count=0;
 
 %% Confusion Matrix Calculation- Training
 d=dist2(train,train);
@@ -81,4 +64,25 @@ count=count+1;
 end
 end
 pertr=count/size(D_index,2)*100
+count=0;
+d=0;
+%% Confusion Matrix Calculation-Recognition
+d=dist2(train,fea);
+[D_sorted, D_index]=sort(d,1);
+label_new=D_index(1,:)';
+
+for i=1:size(D_index,2)
+    label_conf(i,1)=labeltr(label_new(i));
+end
+
+%% Percentage accuracy - Recognition
+for i=1:length(labelte)
+if(label_conf(i)==labelte(i))
+count=count+1;
+end
+end
+perte=count/size(D_index,2)*100;
+
+% print_Te(L,im2,label_conf,labelte,50,5,5,10,85,8);
+
 end
