@@ -1,4 +1,7 @@
-%% If no input is provided, it runs by default on test2.bmp and its corresponding label from locations, classes vectors
+%% Driver file to Run OCR Recogniton
+% If no input is provided, it runs by default on test2.bmp and its 
+% corresponding label from locations, classes vectors
+
 function[perte,pertr,outlabelte] =RunMyOCRRecognition(testimage,locations, classes)
 %% Add path to where the source code for moments is located
 if nargin<1

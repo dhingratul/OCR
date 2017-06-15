@@ -1,4 +1,4 @@
-%% OCR_Extract_Features
+%% Extracts OCR Features from Image
 % Function to extract OCR Features
 % Input: Image, locations, classes
 % Output: Testing, training accuracy
